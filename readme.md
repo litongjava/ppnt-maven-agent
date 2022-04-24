@@ -10,7 +10,8 @@ https://maven.aliyun.com/repository/public/com/jfinal/jfinal/4.9.12/jfinal-4.9.1
 
 ### 安装
 ### 2.1.下载文件
-地址
+地址  
+https://gitee.com/ppnt/ppnt-maven-agent/releases/
 ### 2.1.windows安装
 1)解压文件  
 2)进入解压目录  
