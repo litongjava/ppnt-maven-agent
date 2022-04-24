@@ -39,7 +39,10 @@ public class IndexController {
     String extension = FilenameUtils.getExtension(requestURI);
     if ("pom".equals(extension) || "jar".equals(extension)) {
       String contextPath = sp.getContextPath();
-      requestURI = requestURI.replace(contextPath, "");
+      //取出/maven后的内容
+      requestURI = requestURI.substring(contextPath.length());
+      //requestURI = requestURI.replace(contextPath, "");
+      log.info(requestURI.toString());
       try (OutputStream outputStream = response.getOutputStream()) {
         ds.download(requestURI, outputStream);
         outputStream.flush();
