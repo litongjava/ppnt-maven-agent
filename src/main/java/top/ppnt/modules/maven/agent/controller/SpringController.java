@@ -1,4 +1,4 @@
-package com.bill.robot.maven.agent.controller;
+package top.ppnt.modules.maven.agent.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bill.robot.maven.agent.service.DownloadService;
+import top.ppnt.modules.maven.agent.service.DownloadService;
 
 /**
  * @author bill robot

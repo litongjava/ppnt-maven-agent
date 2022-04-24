@@ -1,4 +1,4 @@
-package com.litong.utils.io;
+package top.ppnt.modules.utils.io;
 
 import java.io.Closeable;
 import java.io.IOException;

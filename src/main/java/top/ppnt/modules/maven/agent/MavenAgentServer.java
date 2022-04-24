@@ -1,4 +1,4 @@
-package com.bill.robot.maven.agent;
+package top.ppnt.modules.maven.agent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
     @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
 
 public class MavenAgentServer {
-  public static final String basePackage = "com.bill.robot.maven.agent";
+  public static final String basePackage = "top.ppnt.modules.maven.agent";
 
   public static void main(String[] args) {
     long start = System.currentTimeMillis();

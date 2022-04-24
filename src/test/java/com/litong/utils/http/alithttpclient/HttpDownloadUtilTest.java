@@ -2,6 +2,8 @@ package com.litong.utils.http.alithttpclient;
 
 import org.junit.Test;
 
+import top.ppnt.modules.utils.http.alithttpclient.HttpDownloadUtil;
+
 /**
  * Created by litng on 2020/1/18.
  */

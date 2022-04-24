@@ -1,4 +1,4 @@
-package com.bill.robot.maven.agent.controller;
+package top.ppnt.modules.maven.agent.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -6,12 +6,14 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bill.robot.maven.agent.service.DownloadService;
+import lombok.extern.slf4j.Slf4j;
+import top.ppnt.modules.maven.agent.service.DownloadService;
 
 /**
  * @author bill robot
@@ -21,6 +23,7 @@ import com.bill.robot.maven.agent.service.DownloadService;
  */
 @RestController
 @RequestMapping("/**")
+@Slf4j
 public class IndexController {
 
   @Autowired
@@ -32,13 +35,24 @@ public class IndexController {
   @RequestMapping()
   public void index(HttpServletRequest request, HttpServletResponse response) {
     String requestURI = request.getRequestURI();
-    String contextPath = sp.getContextPath();
-    requestURI = requestURI.replace(contextPath, "");
-    try (OutputStream outputStream = response.getOutputStream()) {
-      ds.download(requestURI, outputStream);
-      outputStream.flush();
-    } catch (IOException e) {
-      e.printStackTrace();
+    log.info(requestURI.toString());
+    String extension = FilenameUtils.getExtension(requestURI);
+    if ("pom".equals(extension) || "jar".equals(extension)) {
+      String contextPath = sp.getContextPath();
+      requestURI = requestURI.replace(contextPath, "");
+      try (OutputStream outputStream = response.getOutputStream()) {
+        ds.download(requestURI, outputStream);
+        outputStream.flush();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }else {
+      try {
+        response.getWriter().println("please input correct url");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
+
   }
 }

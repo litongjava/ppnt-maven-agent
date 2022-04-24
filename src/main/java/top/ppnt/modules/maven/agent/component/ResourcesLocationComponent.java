@@ -1,4 +1,4 @@
-package com.bill.robot.maven.agent.component;
+package top.ppnt.modules.maven.agent.component;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package com.litong.utils.http.alithttpclient;
+package top.ppnt.modules.utils.http.alithttpclient;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -9,9 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.litong.utils.io.IOUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import top.ppnt.modules.utils.io.IOUtils;
 
 /**
  * 

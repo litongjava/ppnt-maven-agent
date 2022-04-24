@@ -1,43 +1,75 @@
-#bill-maven-agent
+# ppnt-maven-agent
+## 1.什么是ppnt-maven-agent
+ppnt-maven-agent是一个maven代理服务  
+ppnt-maven-agent接收client发送的下载请求从远程下载jar包,将jar包保存到本地并返回给ppnt-maven-agent  
+![](readme_files/1.jpg)  
+假设发送的请求地址是  
+http://127.0.0.1:10016/maven/com/jfinal/jfinal/4.9.12/jfinal-4.9.12.jar  
+则真实的请求地址是  
+https://maven.aliyun.com/repository/public/com/jfinal/jfinal/4.9.12/jfinal-4.9.12.jar  
 
-安装
-1.下载项目
-2.打包
-``
-mvn pckage -DskipTests
-``
-生成文件bill-maven-agent-1.0-release.tar.gz
-3.安装
-```
-mkdir /opt/spring-boot/
-cd /opt/spring-boot/
-upload bill-maven-agent-1.0-release.tar.gz to here
-tar -xf bill-maven-agent-1.0-release.tar.gz
-cd bill-maven-agent-1.0
-```
-4.启动项目,端口使用10016
-```
-./springboot.sh start
-```
-安装完成,访问下面的连接,下载jar包
-```
-http://127.0.0.1:10016/maven2/com/alibaba/fastjson/1.2.60/fastjson-1.2.60.jar
-```
-jar包保存到本地,下次下载jar包时不会不会请求远程服务器
+### 安装
+### 2.1.下载文件
+地址
+### 2.1.windows安装
+1)解压文件  
+2)进入解压目录  
+3)执行启动命令  
+start.bat  
 
-5.整合nginx
+### 2.3.linux安装
+解压文件
 ```
-  location /maven2{
+tar -xf ppnt-maven-agent-1.0-release.tar.gz
+```
+进入解压目录
+```
+cd ppnt-maven-agent-1.0
+```
+执行启动命令
+```
+springboot.sh start
+```
+### 2.4.测试
+访问测试
+http://127.0.0.1:10016/maven/com/jfinal/jfinal/4.9.12/jfinal-4.9.12.jar
+
+## 3.配置
+### 3.1.配置客户端
+修改maven的setting.xml 添加下面的配置
+```
+  <mirrors>
+    <mirror>
+      <id>ppnt-maven-agent</id>
+      <name>ppnt-maven-agent</name>
+      <mirrorOf>*</mirrorOf>
+      <url>http://192.168.104.101:10016/maven</url>
+    </mirror>
+  </mirrors>
+```
+### 3.2.服务端配置
+修改配置文件  
+默认配置文件在config/application.properties下,默认内容如下  
+```
+server.port=10016
+server.context-path=/maven
+spring.resources.static-locations=classpath:/ppnt-maven-agent/
+
+logging.path=logs
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level%logger{0}.%M:%L - %msg%n
+logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level%logger{0}.%M:%L - %msg%n
+
+spring.main.banner-mode = off
+spring.devtools.restart.trigger-file:trigger.txt
+
+#maven remote url
+maven.center.url=https://maven.aliyun.com/repository/public
+#maven local url
+maven.local.path=D:\\dev_mavenRepository
+```
+整合nginx
+```
+  location /maven{
     proxy_pass http://127.0.0.1:10016;
   }
-  location /bill-maven-agent{
-    autoindex on;  # 开启目录文件列表
-    charset utf-8,gbk;  # 避免中文乱码
-    root /opt/spring-boot/bill-maven-agent-1.0/static;
-  }
 ```
-
-maven默认的远程库地址是
-https://repo.maven.apache.org/maven2
-可以在nginx中添加https
-然后修改本地的dns指向
